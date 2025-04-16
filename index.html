@@ -4,16 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Práctica HTML, CSS y JS</title>
-
-    <!-- Enlace a los archivos de estilo -->
     <link rel="stylesheet" href="style.css" />
-
-    <!-- Prism.js para resaltar la sintaxis -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -22,54 +13,47 @@
             <p>Modifica el código y observa los resultados en tiempo real.</p>
         </header>
 
-        <!-- Panel de personalización -->
         <div class="customization">
             <label for="bg-color">Color de fondo:</label>
-            <input type="color" id="bg-color" name="bg-color" value="#f4f7f6" />
+            <input type="color" id="bg-color" value="#f4f7f6">
+            
             <label for="btn-color">Color del botón:</label>
-            <input type="color" id="btn-color" name="btn-color" value="#4CAF50" />
+            <input type="color" id="btn-color" value="#4CAF50">
+            
             <label for="font-size">Tamaño de fuente:</label>
-            <input type="range" id="font-size" name="font-size" min="12" max="30" value="16" />
+            <input type="range" id="font-size" min="12" max="30" value="16">
             <span id="font-size-value">16px</span>
         </div>
 
         <button id="run-btn">Ejecutar Código</button>
 
         <div class="content">
-            <!-- Previsualización en el lado izquierdo -->
             <section class="output">
                 <h2>Vista Previa:</h2>
-                <iframe id="output-frame" width="100%" height="100%"></iframe>
+                <iframe id="output-frame" width="100%" height="400"></iframe>
             </section>
 
-            <!-- Área de código en el lado derecho -->
             <section class="code-editor">
                 <div class="editor">
                     <h2>HTML</h2>
-                    <div class="code-container">
-                        <div class="line-numbers" id="html-line-numbers"></div>
-                        <textarea id="html-code" class="language-html" placeholder="Escribe tu código HTML aquí..."></textarea>
-                    </div>
+                    <textarea id="html-code" placeholder="Escribe tu código HTML aquí..."></textarea>
                 </div>
                 <div class="editor">
                     <h2>CSS</h2>
-                    <div class="code-container">
-                        <div class="line-numbers" id="css-line-numbers"></div>
-                        <textarea id="css-code" class="language-css" placeholder="Escribe tu código CSS aquí..."></textarea>
-                    </div>
+                    <textarea id="css-code" placeholder="Escribe tu código CSS aquí..."></textarea>
                 </div>
                 <div class="editor">
                     <h2>JS</h2>
-                    <div class="code-container">
-                        <div class="line-numbers" id="js-line-numbers"></div>
-                        <textarea id="js-code" class="language-javascript" placeholder="Escribe tu código JavaScript aquí..."></textarea>
-                    </div>
+                    <textarea id="js-code" placeholder="Escribe tu código JavaScript aquí..."></textarea>
                 </div>
             </section>
         </div>
     </div>
+    <footer class="footer">
+        <p>Hecho por <strong>JMVC</strong></p>
+    </footer>
+    
 
-    <!-- Cargar el archivo JS -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSizeInput = document.getElementById('font-size');
     const fontSizeValue = document.getElementById('font-size-value');
 
+    const outputFrame = document.getElementById('output-frame');
+    const outputDoc = outputFrame.contentDocument || outputFrame.contentWindow.document;
+
     // Función para actualizar la numeración de líneas
     function updateLineNumbers(textarea, lineNumbersElement) {
         const lines = textarea.value.split('\n');
@@ -43,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const cssContent = cssCode.value;
         const jsContent = jsCode.value;
 
-        const outputFrame = document.getElementById('output-frame');
         const outputDoc = outputFrame.contentDocument || outputFrame.contentWindow.document;
 
         outputDoc.open();
@@ -70,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para cambiar el color de fondo
     bgColorInput.addEventListener('input', (e) => {
         document.body.style.backgroundColor = e.target.value;
+        const preview = document.querySelector('.output');  // Vista previa
+        preview.style.backgroundColor = e.target.value; // Cambiar fondo de la vista previa
     });
 
     // Función para cambiar el color del botón
