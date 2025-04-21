@@ -2,12 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const htmlCode = document.getElementById('html-code');
     const cssCode = document.getElementById('css-code');
     const jsCode = document.getElementById('js-code');
-    const htmlLineNumbers = document.getElementById('html-line-numbers');
-    const cssLineNumbers = document.getElementById('css-line-numbers');
-    const jsLineNumbers = document.getElementById('js-line-numbers');
 
     const bgColorInput = document.getElementById('bg-color');
-    const btnColorInput = document.getElementById('btn-color');
     const runButton = document.getElementById('run-btn');
     const fontSizeInput = document.getElementById('font-size');
     const fontSizeValue = document.getElementById('font-size-value');
@@ -15,38 +11,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const outputFrame = document.getElementById('output-frame');
     const outputDoc = outputFrame.contentDocument || outputFrame.contentWindow.document;
 
-    // Función para actualizar la numeración de líneas
+    // Línea de números (puedes quitarlas si no usas esta funcionalidad)
+    const htmlLineNumbers = document.getElementById('html-line-numbers');
+    const cssLineNumbers = document.getElementById('css-line-numbers');
+    const jsLineNumbers = document.getElementById('js-line-numbers');
+
     function updateLineNumbers(textarea, lineNumbersElement) {
         const lines = textarea.value.split('\n');
-        let lineNumbers = '';
-        for (let i = 1; i <= lines.length; i++) {
-            lineNumbers += i + '\n';
-        }
-        lineNumbersElement.textContent = lineNumbers;
+        lineNumbersElement.textContent = lines.map((_, i) => i + 1).join('\n');
     }
 
-    // Función para sincronizar el desplazamiento de los números con el área de texto
     function syncScroll(textarea, lineNumbersElement) {
         lineNumbersElement.scrollTop = textarea.scrollTop;
     }
 
-    // Actualizar la numeración de las líneas al escribir
-    htmlCode.addEventListener('input', () => updateLineNumbers(htmlCode, htmlLineNumbers));
-    cssCode.addEventListener('input', () => updateLineNumbers(cssCode, cssLineNumbers));
-    jsCode.addEventListener('input', () => updateLineNumbers(jsCode, jsLineNumbers));
+    function setupTextareaEventListeners(textarea, lineNumbersElement) {
+        if (textarea && lineNumbersElement) {
+            textarea.addEventListener('input', () => updateLineNumbers(textarea, lineNumbersElement));
+            textarea.addEventListener('scroll', () => syncScroll(textarea, lineNumbersElement));
+        }
+    }
 
-    // Sincronización de desplazamiento
-    htmlCode.addEventListener('scroll', () => syncScroll(htmlCode, htmlLineNumbers));
-    cssCode.addEventListener('scroll', () => syncScroll(cssCode, cssLineNumbers));
-    jsCode.addEventListener('scroll', () => syncScroll(jsCode, jsLineNumbers));
+    setupTextareaEventListeners(htmlCode, htmlLineNumbers);
+    setupTextareaEventListeners(cssCode, cssLineNumbers);
+    setupTextareaEventListeners(jsCode, jsLineNumbers);
 
-    // Función para ejecutar el código
     runButton.addEventListener('click', () => {
         const htmlContent = htmlCode.value;
         const cssContent = cssCode.value;
         const jsContent = jsCode.value;
-
-        const outputDoc = outputFrame.contentDocument || outputFrame.contentWindow.document;
 
         outputDoc.open();
         outputDoc.write(`
@@ -62,26 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         } catch (error) {
                             console.error('Error al ejecutar el código JS:', error);
                         }
-                    </script>
+                    <\/script>
                 </body>
             </html>
         `);
         outputDoc.close();
     });
 
-    // Función para cambiar el color de fondo
     bgColorInput.addEventListener('input', (e) => {
         document.body.style.backgroundColor = e.target.value;
-        const preview = document.querySelector('.output');  // Vista previa
-        preview.style.backgroundColor = e.target.value; // Cambiar fondo de la vista previa
     });
 
-    // Función para cambiar el color del botón
-    btnColorInput.addEventListener('input', (e) => {
-        runButton.style.backgroundColor = e.target.value;
-    });
-
-    // Cambiar el tamaño de la fuente
     fontSizeInput.addEventListener('input', (e) => {
         const newSize = e.target.value + "px";
         fontSizeValue.textContent = newSize;
@@ -90,13 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
         jsCode.style.fontSize = newSize;
     });
 
-    // Inicializar las líneas de numeración
-    updateLineNumbers(htmlCode, htmlLineNumbers);
-    updateLineNumbers(cssCode, cssLineNumbers);
-    updateLineNumbers(jsCode, jsLineNumbers);
+    const preview = document.querySelector('.output');
+    preview.style.backgroundColor = '#e0f7fa';
 
-    // Sincronizar el desplazamiento de los números con los textarea al cargar la página
-    syncScroll(htmlCode, htmlLineNumbers);
-    syncScroll(cssCode, cssLineNumbers);
-    syncScroll(jsCode, jsLineNumbers);
+    // Inicializar líneas de número (si existen)
+    if (htmlLineNumbers && cssLineNumbers && jsLineNumbers) {
+        updateLineNumbers(htmlCode, htmlLineNumbers);
+        updateLineNumbers(cssCode, cssLineNumbers);
+        updateLineNumbers(jsCode, jsLineNumbers);
+
+        syncScroll(htmlCode, htmlLineNumbers);
+        syncScroll(cssCode, cssLineNumbers);
+        syncScroll(jsCode, jsLineNumbers);
+    }
+
+    // Mostrar/Ocultar imagen de actividad
+    const showImageBtn = document.getElementById("show-image-btn");
+    const imagePreview = document.getElementById("image-preview");
+
+    showImageBtn.addEventListener("click", function () {
+        imagePreview.style.display = (imagePreview.style.display === "none") ? "block" : "none";
+    });
 });
